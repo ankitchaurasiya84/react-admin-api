@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { Admin, ListGuesser, SearchInput, EmailField, Resource, List, Datagrid, TextField, Create, SimpleForm, TextInput } from 'react-admin';
+import {dataProvider} from './dataProvider'; // Make sure this is the correct path to your dataProvider
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+// Define your filters with a SearchInput
+const UserFilters = [
+    <SearchInput source="q" alwaysOn placeholder="Search by email" />
+];
+
+// User List with Filters
+const UserList = (props) => (
+    <List {...props} filters={UserFilters} title="User List">
+        <Datagrid rowClick="edit">
+            <TextField source="email" />
+            <EmailField source="password" />
+        </Datagrid>
+    </List>
+);
+
+// Main App Component
+const App = () => (
+    <Admin dataProvider={dataProvider}>
+        <Resource name="getlogin" list={UserList} />
+    </Admin>
+);
 
 export default App;
